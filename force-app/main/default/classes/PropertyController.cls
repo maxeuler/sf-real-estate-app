@@ -3,6 +3,7 @@ public with sharing class PropertyController {
     private static final Decimal DEFAULT_MAX_PRICE = 9999999;
     private static final Integer DEFAULT_PAGE_SIZE = 9;
 
+    @AuraEnabled(cacheable=true)
     public static PagedResult getPagedPropertyList(
         String searchKey,
         Decimal maxPrice,
