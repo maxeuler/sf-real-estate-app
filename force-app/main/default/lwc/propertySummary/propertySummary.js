@@ -1,5 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import { getRecord, getFieldValue } from 'lightning/uiRecordApi';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import NAME_FIELD from '@salesforce/schema/Property__c.Name';
 import BED_FIELD from '@salesforce/schema/Property__c.Beds__c';
 import BATH_FIELD from '@salesforce/schema/Property__c.Baths__c';
@@ -10,6 +12,10 @@ import PICTURE_FIELD from '@salesforce/schema/Property__c.Picture__c';
 export default class PropertySummary extends LightningElement {
     propertyId = 'a017R00003ljNgkQAE';
     propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
+    subscription;
+
+    @wire(MessageContext)
+    messageContext;
 
     @wire(getRecord, {
         recordId: '$propertyId',
@@ -28,5 +34,24 @@ export default class PropertySummary extends LightningElement {
 
     get pictureURL() {
         return getFieldValue(this.property.data, PICTURE_FIELD);
+    }
+
+    connectedCallback() {
+        this.subscription = subscribe(
+            this.messageContext,
+            PROPERTYSELECTEDMC,
+            message => {
+                this.handlePropertySelected(message);
+            }
+        )
+    }
+
+    disconnectedCallback() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    handlePropertySelected(message) {
+        this.propertyId = message.propertyId;
     }
 }
