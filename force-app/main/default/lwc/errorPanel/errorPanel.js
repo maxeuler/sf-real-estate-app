@@ -1,4 +1,5 @@
 import { LightningElement, api } from 'lwc';
+import { reduceErrors } from 'c/ldsUtils';
 import noDataIllustration from './templates/noDataIllustration.html';
 
 export default class ErrorPanel extends LightningElement {
@@ -9,7 +10,7 @@ export default class ErrorPanel extends LightningElement {
     viewDetails = false;
 
     get errorMessages() {
-        return ''; // TODO
+        return reduceErrors(this.errors); 
     }
 
     render() {
