@@ -16,6 +16,11 @@
                 ></lightning-record-form>
             </div>
         </template>
+        <template if:false={propertyId}>
+            <c-error-panel
+                friendly-message="Select a property to see details"
+            ></c-error-panel>
+        </template>
     </lightning-card>
     
 </template>

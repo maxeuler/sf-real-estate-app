@@ -10,7 +10,7 @@ import BROKER_FIELD from '@salesforce/schema/Property__c.Broker__c';
 import PICTURE_FIELD from '@salesforce/schema/Property__c.Picture__c';
 
 export default class PropertySummary extends LightningElement {
-    propertyId = 'a017R00003ljNgkQAE';
+    propertyId;
     propertyFields = [BED_FIELD, BATH_FIELD, PRICE_FIELD, BROKER_FIELD];
     subscription;
 
