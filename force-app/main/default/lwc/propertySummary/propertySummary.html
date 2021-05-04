@@ -1,0 +1,21 @@
+<template>
+    <lightning-card icon-name="custom:custom85">
+        <template if:true={property.data}>
+            <span slot="title">{propertyName}</span>
+            <div class="slds-var-m-horizontal_medium">
+                <img
+                    src={pictureURL}
+                    alt="Property picture"
+                    class="slds-var-m-bottom_x-small"
+                />
+                <lightning-record-form
+                    object-api-name="Property__c"
+                    record-id={propertyId}
+                    fields={propertyFields}
+                    columns="2"
+                ></lightning-record-form>
+            </div>
+        </template>
+    </lightning-card>
+    
+</template>
