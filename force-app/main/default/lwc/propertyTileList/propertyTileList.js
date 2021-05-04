@@ -21,4 +21,12 @@ export default class PropertyTileList extends LightningElement {
         pageNumber: '$pageNumber'
     })
     properties;
+
+    handlePreviousPage() {
+        this.pageNumber = this.pageNumber - 1;
+    }
+
+    handleNextPage() {
+        this.pageNumber = this.pageNumber + 1;
+    }
 }
