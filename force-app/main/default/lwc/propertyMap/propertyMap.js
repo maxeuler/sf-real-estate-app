@@ -1,5 +1,7 @@
 import { LightningElement, wire, api } from 'lwc';
 import { getRecord } from 'lightning/uiRecordApi';
+import { subscribe, unsubscribe, MessageContext } from 'lightning/messageService';
+import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 
 const fields = [
     'Property__c.Address__c',
@@ -12,9 +14,13 @@ export default class PropertyMap extends LightningElement {
     address;
     error;
     markers;
-    propertyId = 'a017R00003ljNgkQAE';
+    propertyId;
     zoomLevel = 14;
+    subscription;
     
+    @wire(MessageContext)
+    messageContext;
+
     @wire(getRecord, { recordId: '$propertyId', fields })
     wiredRecord({ error, data }) {
         if (data) {
@@ -52,5 +58,24 @@ export default class PropertyMap extends LightningElement {
 
     set recordId(propertyId) {
         this.propertyId = propertyId;
+    }
+
+    connectedCallback() {
+        this.subscription = subscribe(
+            this.messageContext,
+            PROPERTYSELECTEDMC,
+            message => {
+                this.handlePropertySelected(message);
+            }
+        )
+    }
+
+    disconnectedCallback() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    handlePropertySelected(message) {
+        this.propertyId = message.propertyId;
     }
 }
