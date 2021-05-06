@@ -50,13 +50,14 @@ export default class DaysOnMarket extends LightningElement {
     get badgeClass() {
         return 'badge ' + this.status;
     }
-    
+
     get barClass() {
         return 'bar ' + this.status;
     }
 
     get barStyle() {
-        const value = (this.daysOnMarket / MAX_DAYS_CHART) * 100;
+        let value = (this.daysOnMarket / MAX_DAYS_CHART) * 100;
+        if (value > 100) value = 100;
         return 'width:' + value + '%';
     }
 }
