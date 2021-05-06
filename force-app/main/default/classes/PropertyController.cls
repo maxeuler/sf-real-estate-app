@@ -93,7 +93,7 @@ public with sharing class PropertyController {
         return [
             SELECT Id, Title
             FROM ContentVersion
-            WHERE ContentDocumentId IN :contentIds AND IsLatest = true
+            WHERE ContentDocumentId IN :contentIds AND IsLatest = TRUE
             WITH SECURITY_ENFORCED
             ORDER BY CreatedDate
         ];
