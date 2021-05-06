@@ -1,7 +1,8 @@
 import { LightningElement, wire } from 'lwc';
-import { publish, MessageContext } from 'lightning/messageService';
+import { publish, MessageContext, subscribe, unsubscribe } from 'lightning/messageService';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
+import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 
 const PAGE_SIZE = 9;
 
@@ -26,6 +27,28 @@ export default class PropertyTileList extends LightningElement {
         pageNumber: '$pageNumber'
     })
     properties;
+
+    connectedCallback() {
+        this.subscription = subscribe(
+            this.messageContext,
+            FILTERSCHANGEMC,
+            message => {
+                this.handleFilterChange(message);
+            }
+        );
+    }
+
+    disconnectedCallback() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    handleFilterChange(filters) {
+        this.searchKey = filters.searchKey;
+        this.maxPrice = filters.maxPrice;
+        this.minBedrooms = filters.minBedrooms;
+        this.minBathrooms = filters.minBathrooms;
+    }
 
     handlePropertySelected(event) {
         const message = { propertyId: event.detail };
