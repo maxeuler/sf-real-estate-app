@@ -7,36 +7,47 @@
         ></lightning-button>
 
         <div class="slds-var-m-around_medium">
-            <lightning-input
-                label="Search Key"
-                type="text"
-                value={searchKey}
-                onchange={handleSearchKeyChange}
-            ></lightning-input>
-            <lightning-slider
-                label="Max Price"
-                step="50000"
-                min="0"
-                max="1200000"
-                value={maxPrize}
-                onchange={handleMaxPriceChange}
-            ></lightning-slider>
-            <lightning-slider
-                label="Bedrooms"
-                step="1"
-                min="0"
-                max="6"
-                value={minBedrooms}
-                onchange={handleMinBedroomsChange}
-            ></lightning-slider>
-            <lightning-slider
-                label="Bathrooms"
-                step="1"
-                min="0"
-                max="6"
-                value={minBathrooms}
-                onchange={handleMinBathroomsChange}
-            ></lightning-slider>
+
+            <div class="slds-grid slds-gutters">
+                <div class="slds-col">
+                    <lightning-input
+                        label="Search Key"
+                        type="text"
+                        value={searchKey}
+                        onchange={handleSearchKeyChange}
+                    ></lightning-input>
+                </div>
+                <div class="slds-col">
+                    <lightning-slider
+                        label="Max Price"
+                        step="50000"
+                        min="0"
+                        max="1200000"
+                        value={maxPrice}
+                        onchange={handleMaxPriceChange}
+                    ></lightning-slider>
+                </div>
+                <div class="slds-col">
+                    <lightning-slider
+                        label="Bedrooms"
+                        step="1"
+                        min="0"
+                        max="6"
+                        value={minBedrooms}
+                        onchange={handleMinBedroomsChange}
+                    ></lightning-slider>
+                </div>
+                <div class="slds-col">
+                    <lightning-slider
+                        label="Bathrooms"
+                        step="1"
+                        min="0"
+                        max="6"
+                        value={minBathrooms}
+                        onchange={handleMinBathroomsChange}
+                    ></lightning-slider>
+                </div>
+            </div>
         </div>
     </lightning-card>
 </template>
