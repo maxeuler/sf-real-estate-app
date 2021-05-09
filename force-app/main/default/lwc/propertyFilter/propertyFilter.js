@@ -1,5 +1,5 @@
 import { LightningElement, wire } from 'lwc';
-import { publish, MessageContext } from 'lightning/messageService';
+import { publish, MessageContext, releaseMessageContext } from 'lightning/messageService';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
 
 const DELAY = 350;
@@ -54,5 +54,9 @@ export default class PropertyFilter extends LightningElement {
             };
             publish(this.messageContext, FILTERSCHANGEMC, filters);
         }, DELAY);
+    }
+
+    disconnectedCallback() {
+        releaseMessageContext(this.messageContext);
     }
 }

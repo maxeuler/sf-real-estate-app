@@ -1,5 +1,10 @@
 import { LightningElement, wire } from 'lwc';
-import { publish, MessageContext, subscribe, unsubscribe } from 'lightning/messageService';
+import { 
+    publish, 
+    MessageContext, 
+    subscribe, 
+    unsubscribe,
+    releaseMessageContext } from 'lightning/messageService';
 import getPagedPropertyList from '@salesforce/apex/PropertyController.getPagedPropertyList';
 import PROPERTYSELECTEDMC from '@salesforce/messageChannel/PropertySelected__c';
 import FILTERSCHANGEMC from '@salesforce/messageChannel/FiltersChange__c';
@@ -41,6 +46,7 @@ export default class PropertyTileList extends LightningElement {
     disconnectedCallback() {
         unsubscribe(this.subscription);
         this.subscription = null;
+        releaseMessageContext(this.messageContext);
     }
 
     handleFilterChange(filters) {
